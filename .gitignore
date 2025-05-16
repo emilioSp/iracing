@@ -79,3 +79,5 @@ build/Release
 node_modules
 
 cookie-jar
+.env
+dist/
