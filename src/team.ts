@@ -1,5 +1,5 @@
-import { storage } from '../storage.js';
 import { API_BASE_URL } from './constant.js';
+import { fetchData } from './repository/api.js';
 
 interface TeamResponse {
   link: string;
@@ -62,27 +62,8 @@ interface TeamData {
 }
 
 export const team = async (): Promise<TeamData> => {
-  const store = storage.getStore();
-  if (!store) {
-    throw new Error('Storage context not found');
-  }
+  const team = await fetchData(`${API_BASE_URL}/team/get?team_id=364887`);
+  console.log(team);
+  return team as TeamData;
+};
 
-  const { authCookie } = store;
-  const headers = new Headers();
-  headers.append('Cookie', authCookie);
-
-  const response = await fetch(`${API_BASE_URL}/team/get?team_id=364887`, {
-    method: 'GET',
-    headers,
-    redirect: 'follow',
-  });
-
-  const body = await response.json() as TeamResponse;
-
-  if (!response.ok) {
-    throw new Error(JSON.stringify(body));
-  }
-
-  const data = await fetch(body.link).then((response) => response.json()) as TeamData;
-  return data;
-}; 

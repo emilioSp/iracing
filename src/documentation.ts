@@ -21,4 +21,4 @@ export const documentation = async (): Promise<void> => {
   const data = await response.text();
   writeFileSync('./documentation.json', data);
   console.log('ok');
-}; 
+};

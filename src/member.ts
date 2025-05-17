@@ -1,9 +1,5 @@
-import { storage } from '../storage.js';
-import { API_BASE_URL } from './constant.js';
-
-interface MemberResponse {
-  link: string;
-}
+import { fetchData } from "./repository/api.js";
+import { API_BASE_URL } from "./constant.js";
 
 interface License {
   category_id: number;
@@ -29,24 +25,7 @@ interface MemberData {
 }
 
 export const member = async (): Promise<MemberData> => {
-  const store = storage.getStore();
-  if (!store) {
-    throw new Error('Storage context not found');
-  }
-
-  const { authCookie } = store;
-  const headers = new Headers();
-  headers.append('Cookie', authCookie);
-
-  const response = await fetch(
-    'https://members-ng.iracing.com/data/member/get?include_licenses=true&cust_ids=900937',
-    {
-      method: 'GET',
-      headers,
-      redirect: 'follow',
-    },
-  ).then((response) => response.json()) as MemberResponse;
-
-  const data = await fetch(response.link).then((response) => response.json()) as MemberData;
-  return data;
+  const member = await fetchData(`${API_BASE_URL}/member/get?include_licenses=true&cust_ids=900937`);
+  console.log(member);
+  return member as MemberData;
 }; 

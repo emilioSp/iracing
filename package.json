@@ -6,7 +6,7 @@
 	"scripts": {
 		"api": "tsx --env-file=./.env index.ts",
 		"check": "biome check --write",
-		"login": "tsx --env-file=./.env login.ts",
+		"login": "tsx --env-file=./.env perform-login.ts",
 		"mcp": "tsx --env-file=./.env mcp-server.ts"
 	},
 	"author": "",
