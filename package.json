@@ -4,15 +4,15 @@
 	"description": "Node.js cli for iRacing data api",
 	"files": ["dist"],
 	"main": "dist/index.js",
+	"bin": {
+		"iracing-data-cli": "dist/index.js"
+	},
 	"type": "module",
 	"scripts": {
 		"api": "tsx --env-file=./.env index.ts",
 		"check": "biome check --write",
 		"login": "tsx --env-file=./.env perform-login.ts",
 		"build": "tsc"
-	},
-	"bin": {
-		"iracing": "index.js"
 	},
 	"author": "emilio.spatola@gmail.com",
 	"license": "MIT",
