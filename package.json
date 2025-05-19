@@ -1,13 +1,15 @@
 {
-	"name": "iracing",
+	"name": "iracing-data-cli",
 	"version": "1.0.0",
 	"description": "Node.js cli for iRacing data api",
 	"files": ["dist"],
+	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
 		"api": "tsx --env-file=./.env index.ts",
 		"check": "biome check --write",
-		"login": "tsx --env-file=./.env perform-login.ts"
+		"login": "tsx --env-file=./.env perform-login.ts",
+		"build": "tsc"
 	},
 	"bin": {
 		"iracing": "index.js"
@@ -20,7 +22,6 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@types/tough-cookie": "4.0.5",
-		"tsc": "2.0.4",
 		"tsx": "4.19.4",
 		"typescript": "5.8.3"
 	}
