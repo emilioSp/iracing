@@ -1,7 +1,8 @@
 {
 	"name": "iracing",
 	"version": "1.0.0",
-	"description": "Node.js lib for iRacing data api",
+	"description": "Node.js cli for iRacing data api",
+	"files": ["dist"],
 	"type": "module",
 	"scripts": {
 		"api": "tsx --env-file=./.env index.ts",
@@ -11,7 +12,7 @@
 	"bin": {
 		"iracing": "index.js"
 	},
-	"author": "",
+	"author": "emilio.spatola@gmail.com",
 	"license": "MIT",
 	"dependencies": {
 		"tough-cookie": "4.1.3"
