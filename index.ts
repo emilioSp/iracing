@@ -4,6 +4,12 @@ import { documentation, member, team } from './src/index.js';
 import { storage } from './storage.js';
 import { performLogin } from './src/login.js';
 
+const api = process.argv.at(-1) as ApiFunction | undefined;
+if (api === 'test') {
+	console.log('test OK');
+	process.exit(0);
+}
+
 if (!process.env.COOKIE_JAR) {
 	throw new Error('COOKIE_JAR environment variable is not set');
 }
@@ -37,7 +43,7 @@ if (diff <= 60_000) {
 	await performLogin();
 }
 
-type ApiFunction = 'documentation' | 'team' | 'member';
+type ApiFunction = 'documentation' | 'team' | 'member' | 'test';
 storage.run({ authCookie }, async () => {
 	const api = process.argv.at(-1) as ApiFunction | undefined;
 
