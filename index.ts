@@ -11,7 +11,7 @@ let authCookie: string;
 try {
 	authCookie = readFileSync(process.env.COOKIE_JAR, 'utf8');
 	console.log('Auth cookie loaded successfully.');
-} catch (e) {
+} catch {
 	await performLogin();
 	authCookie = readFileSync(process.env.COOKIE_JAR, 'utf8');
 }
