@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { readFileSync } from 'node:fs';
 import { documentation, member, team } from './src/index.js';
 import { storage } from './storage.js';
