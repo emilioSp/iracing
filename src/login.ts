@@ -1,6 +1,6 @@
+import { createHash } from 'node:crypto';
 import { writeFileSync } from 'node:fs';
 import tough from 'tough-cookie';
-import { createHash } from 'node:crypto';
 
 interface AuthResponse {
   authcode: string | 0;
@@ -28,11 +28,13 @@ export async function performLogin() {
     },
     body: JSON.stringify({
       email: process.env.EMAIL,
-      password: createHash('sha256').update(`${process.env.PASSWORD}${process.env.EMAIL}`).digest('base64'),
+      password: createHash('sha256')
+        .update(`${process.env.PASSWORD}${process.env.EMAIL}`)
+        .digest('base64'),
     }),
   });
 
-  const { authcode } = await response.json() as AuthResponse;
+  const { authcode } = (await response.json()) as AuthResponse;
 
   if (authcode === 0) {
     throw new Error('Failed to login');
@@ -45,7 +47,9 @@ export async function performLogin() {
 
   const cookieJar = tough.parse(cookieHeader)?.clone();
   if (!cookieJar) {
-    throw new Error('Failed to parse cookie. Please first login to iRacing and try again.');
+    throw new Error(
+      'Failed to parse cookie. Please first login to iRacing and try again.',
+    );
   }
 
   cookieJar.key = 'authtoken_members';
@@ -59,4 +63,3 @@ export async function performLogin() {
   writeFileSync(process.env.COOKIE_JAR, cookieJar.toString());
   console.log('ok');
 }
-

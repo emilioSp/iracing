@@ -1,5 +1,5 @@
-import { fetchData } from "./repository/api.js";
-import { API_BASE_URL } from "./constant.js";
+import { API_BASE_URL } from './constant.js';
+import { fetchData } from './repository/api.js';
 
 interface License {
   category_id: number;
@@ -25,7 +25,9 @@ interface MemberData {
 }
 
 export const member = async (): Promise<MemberData> => {
-  const member = await fetchData(`${API_BASE_URL}/member/get?include_licenses=true&cust_ids=900937`);
+  const member = await fetchData(
+    `${API_BASE_URL}/member/get?include_licenses=true&cust_ids=900937`,
+  );
   console.log(member);
   return member as MemberData;
-}; 
+};

@@ -1,8 +1,8 @@
-import { storage } from "../../storage.js";
+import { storage } from '../../storage.js';
 
 type ApiLinkResponse = {
   link: string;
-}
+};
 
 export const fetchData = async (url: string): Promise<any> => {
   const store = storage.getStore();
@@ -23,7 +23,7 @@ export const fetchData = async (url: string): Promise<any> => {
     throw new Error(`Failed to fetch data from ${url}: ${response.statusText}`);
   }
 
-  const body = await response.json() as ApiLinkResponse;
+  const body = (await response.json()) as ApiLinkResponse;
 
   if (!response.ok) {
     throw new Error(JSON.stringify(body));
@@ -31,4 +31,4 @@ export const fetchData = async (url: string): Promise<any> => {
 
   const data = await fetch(body.link).then((response) => response.json());
   return data;
-}
+};

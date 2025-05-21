@@ -1,3 +1,3 @@
-import { performLogin } from "./src/login.js";
+import { performLogin } from './src/login.js';
 
 await performLogin();

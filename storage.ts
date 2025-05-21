@@ -4,4 +4,4 @@ interface StorageContext {
   authCookie: string;
 }
 
-export const storage = new AsyncLocalStorage<StorageContext>(); 
+export const storage = new AsyncLocalStorage<StorageContext>();

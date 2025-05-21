@@ -1,10 +1,6 @@
 import { API_BASE_URL } from './constant.js';
 import { fetchData } from './repository/api.js';
 
-interface TeamResponse {
-  link: string;
-}
-
 interface Helmet {
   pattern: number;
   color1: string;
@@ -66,4 +62,3 @@ export const team = async (): Promise<TeamData> => {
   console.log(team);
   return team as TeamData;
 };
-

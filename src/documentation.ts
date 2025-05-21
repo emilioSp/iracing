@@ -7,7 +7,7 @@ export const documentation = async (): Promise<void> => {
   if (!store) {
     throw new Error('Storage context not found');
   }
-  
+
   const { authCookie } = store;
   const headers = new Headers();
   headers.append('Cookie', authCookie);
