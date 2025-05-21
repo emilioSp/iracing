@@ -4,12 +4,6 @@ import { documentation, member, team } from './src/index.js';
 import { performLogin } from './src/login.js';
 import { storage } from './storage.js';
 
-const api = process.argv.at(-1) as ApiFunction | undefined;
-if (api === 'test') {
-  console.log('test OK');
-  process.exit(0);
-}
-
 if (!process.env.COOKIE_JAR) {
   throw new Error('COOKIE_JAR environment variable is not set');
 }
@@ -45,18 +39,22 @@ if (diff <= 60_000) {
 
 type ApiFunction = 'documentation' | 'team' | 'member' | 'test';
 storage.run({ authCookie }, async () => {
-  const api = process.argv.at(-1) as ApiFunction | undefined;
+  const [api, id] = process.argv.slice(2) as [ApiFunction, string?];
 
   switch (api) {
     case 'documentation':
       await documentation();
       break;
-    case 'team':
-      await team();
+    case 'team': {
+      const teamData = await team(id ? Number(id) : undefined);
+      console.log(JSON.stringify(teamData, null, 2));
       break;
-    case 'member':
-      await member();
+    }
+    case 'member': {
+      const memberData = await member(id ? Number(id) : undefined);
+      console.log(JSON.stringify(memberData, null, 2));
       break;
+    }
     default:
       throw new Error(`api not defined ${api}`);
   }

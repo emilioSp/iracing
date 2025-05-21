@@ -24,10 +24,10 @@ interface MemberData {
   }>;
 }
 
-export const member = async (): Promise<MemberData> => {
+export const member = async (memberId?: number): Promise<MemberData> => {
+  const id = memberId ?? 900937; // Use provided ID or default to 900937
   const member = await fetchData(
-    `${API_BASE_URL}/member/get?include_licenses=true&cust_ids=900937`,
+    `${API_BASE_URL}/member/get?include_licenses=true&cust_ids=${id}`,
   );
-  console.log(member);
   return member as MemberData;
 };

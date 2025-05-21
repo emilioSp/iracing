@@ -57,8 +57,8 @@ interface TeamData {
   roster: TeamMember[];
 }
 
-export const team = async (): Promise<TeamData> => {
-  const team = await fetchData(`${API_BASE_URL}/team/get?team_id=364887`);
-  console.log(team);
+export const team = async (teamId?: number): Promise<TeamData> => {
+  const id = teamId ?? 364887; // Use provided ID or default to 364887
+  const team = await fetchData(`${API_BASE_URL}/team/get?team_id=${id}`);
   return team as TeamData;
 };

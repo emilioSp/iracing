@@ -65,48 +65,65 @@ server.tool('login', {}, async () => {
 });
 
 // Define a tool to get member profile
-server.tool('get_member_profile', {}, async () => {
-  try {
-    const memberData = await withStorageContext(() => member());
-    return {
-      content: [
-        {
-          type: 'text',
-          text: JSON.stringify(memberData, null, 2),
-        },
-      ],
-    };
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    return {
-      content: [
-        { type: 'text', text: `Failed to get member profile: ${errorMessage}` },
-      ],
-    };
-  }
-});
+server.tool(
+  'get_member_profile',
+  {
+    member_id: z.number().optional(),
+  },
+  async ({ member_id }) => {
+    try {
+      const memberData = await withStorageContext(() => member(member_id));
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(memberData, null, 2),
+          },
+        ],
+      };
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      return {
+        content: [
+          {
+            type: 'text',
+            text: `Failed to get member profile: ${errorMessage}`,
+          },
+        ],
+      };
+    }
+  },
+);
 
 // Define a tool to get team data
-server.tool('get_team', {}, async () => {
-  try {
-    const teamData = await withStorageContext(() => team());
-    return {
-      content: [
-        {
-          type: 'text',
-          text: JSON.stringify(teamData, null, 2),
-        },
-      ],
-    };
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : String(error);
-    return {
-      content: [
-        { type: 'text', text: `Failed to get team data: ${errorMessage}` },
-      ],
-    };
-  }
-});
+server.tool(
+  'get_team',
+  {
+    team_id: z.number().optional(),
+  },
+  async ({ team_id }) => {
+    try {
+      const teamData = await withStorageContext(() => team(team_id));
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(teamData, null, 2),
+          },
+        ],
+      };
+    } catch (error: unknown) {
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      return {
+        content: [
+          { type: 'text', text: `Failed to get team data: ${errorMessage}` },
+        ],
+      };
+    }
+  },
+);
 
 // Start the server
 const transport = new StdioServerTransport();
