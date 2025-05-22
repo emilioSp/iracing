@@ -35,6 +35,7 @@ console.log(diff);
 
 if (diff <= 60_000) {
   await performLogin();
+  authCookie = readFileSync(process.env.COOKIE_JAR, 'utf8');
 }
 
 type ApiFunction = 'documentation' | 'team' | 'member' | 'test';

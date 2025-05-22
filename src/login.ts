@@ -12,14 +12,21 @@ interface AuthToken {
 }
 
 export async function performLogin() {
-  if (!process.env.EMAIL || !process.env.PASSWORD || !process.env.COOKIE_JAR) {
+  if (
+    !process.env.EMAIL ||
+    (!process.env.PASSWORD && !process.env.API_KEY) ||
+    !process.env.COOKIE_JAR
+  ) {
     throw new Error('Required environment variables are not set');
   }
 
   // // https://forums.iracing.com/discussion/15068/general-availability-of-data-api/p1
-  // console.log(createHash('sha256').update(`${password}${email}`).digest('base64'));
-  // process.exit(1);
-  // remember to enable legacy authentication in your account settings
+
+  const api_key =
+    process.env.API_KEY ||
+    createHash('sha256')
+      .update(`${process.env.PASSWORD}${process.env.EMAIL}`)
+      .digest('base64');
 
   const response = await fetch('https://members-ng.iracing.com/auth', {
     method: 'POST',
@@ -28,9 +35,7 @@ export async function performLogin() {
     },
     body: JSON.stringify({
       email: process.env.EMAIL,
-      password: createHash('sha256')
-        .update(`${process.env.PASSWORD}${process.env.EMAIL}`)
-        .digest('base64'),
+      password: api_key,
     }),
   });
 
